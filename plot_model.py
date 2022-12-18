@@ -4,6 +4,7 @@ from sklearn.linear_model import LinearRegression
 
 def plot(X_train, X_test, Y_train, Y_test):
     regressor = LinearRegression()
+    regressor = regressor.fit(X_train, Y_train)
 
     #visualizing the Training set results  
     plt.scatter(X_train, Y_train, color = 'red')
