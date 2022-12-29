@@ -1,1 +1,1 @@
-# Linear_regression_model
+# AI/ML_Projects
