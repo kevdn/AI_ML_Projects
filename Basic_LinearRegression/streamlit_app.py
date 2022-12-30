@@ -1,9 +1,9 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-import plotly_express as px
+
 import sklearn
 from sklearn.linear_model import LinearRegression
 
@@ -18,8 +18,8 @@ if uploaded_file is not None:
 
     test_size = st.number_input('What test size do you want?')
     st.write('The test size is ', test_size)
-    X = dataset.iloc[ : ,   : 1 ].values
-    Y = dataset.iloc[ : , 1 ].values
+    X = df.iloc[ : ,   : 1 ].values
+    Y = df.iloc[ : , 1 ].values
     X_train, X_test, Y_train, Y_test = train_test_split( X, Y, test_size = test_size, random_state = 0) 
     st.markdown("### Your uploaded data")
     st.write(df)
@@ -32,15 +32,19 @@ if uploaded_file is not None:
 
     predict = st.button("PREDICT")
     if predict:
+        regressor = LinearRegression()
+        regressor = regressor.fit(X_train, Y_train)
         st.write("PREDICT")
         Y_pred = regressor.predict(X_test)
         st.write(Y_pred)  
 
     plot = st.button("PLOT")
     if plot:
+        regressor = LinearRegression()
+        regressor = regressor.fit(X_train, Y_train)
         st.write("PLOT")
         st.write("Visualizing the Training set results")
-        fig, ax = plt.subplots(1,1)
+        fig, ax = plt.subplots()
         ax.scatter(X_train, Y_train, color = 'red')
         ax.plot(X_train, regressor.predict(X_train), color = 'blue')
         ax.set_xlabel(list(df.columns.values)[0])
@@ -49,7 +53,7 @@ if uploaded_file is not None:
         st.pyplot(fig)
 
         st.write("Visualizing the Test set results")
-        fig, ax = plt.subplots(1,1)
+        fig, ax = plt.subplots()
         ax.scatter(X_test, Y_test, color = 'red')
         ax.plot(X_train, regressor.predict(X_train), color = 'blue')
         ax.set_xlabel(list(df.columns.values)[0])
